@@ -78,11 +78,29 @@
       ctx.fill();
       ctx.closePath();
     };
+
+    const bulletShoot = () => {
+      if (isShooting && shot == false) {
+        bulletX = playerX + playerHeight / 2 - bulletWidth / 2;
+        bulletY = playerY - bulletHeight;
+        shot = true; 
+      }
+      if (isShooting && shot == true) {
+        bulletY -= bulletSpeedY
+      }
+      if (bulletY < 0) {
+        shot = false;
+        isShooting = false;
+      }
+      if (shot == false && isShooting == false) {
+        bulletX = 0;
+        bulletY = 0;
+      }
+    };
   
     const animate = () => {
 
       drawPlayer(); 
-
       drawBullet();
 
       const enemiesStillOnScreen = [];
@@ -112,22 +130,7 @@
             playerY += 4;
         };
 
-        if (isShooting && shot == false) {
-          bulletX = playerX + playerHeight / 2 - bulletWidth / 2;
-          bulletY = playerY - bulletHeight;
-          shot = true; 
-        }
-        if (isShooting && shot) {
-          bulletY -= bulletSpeedY
-        }
-        if (bulletY < 0) {
-          shot = false;
-          isShooting = false;
-        }
-        if (shot == false && isShooting == false) {
-          bulletX = 0;
-          bulletY = 0;
-        }
+        bulletShoot(); 
 
 
         if (gameOver) {
@@ -167,9 +170,10 @@
         if (event.key === 'ArrowRight' || event.key === 'd' || event.key === 'D') {
           isMovingRight = true
           };
-        if (event.key === 'SpaceKey') {
+        if (event.key === '32') {
           isShooting = true
           };
+          console.log('shoot')
         //console.log({ isMovingDown, isMovingLeft, isMovingRight, isMovingUp })
       });
     
@@ -187,9 +191,10 @@
         if (event.key === 'ArrowRight' || event.key === 'd' || event.key === 'D') {
           isMovingRight = false
           };
-        if (event.key === 'SpaceKey') {
+        if (event.key === '32') {
           isShooting = false
           };
+          //console.log('shoot')
         //console.log({ isMovingDown, isMovingLeft, isMovingRight, isMovingUp })
         });
     
