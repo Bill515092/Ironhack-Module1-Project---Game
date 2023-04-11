@@ -3,6 +3,8 @@
     const ctx = canvas.getContext('2d'); 
     const startButton = document.querySelector('startButton');
 
+    let score = 0;
+
     let isMovingDown = false;
     let isMovingLeft = false;
     let isMovingRight = false; 
@@ -15,11 +17,11 @@
     let playerHeight = 40;
     let playerWidth = 40;
 
-    let bulletX = 100;
-    let bulletY = 100;
-    let bulletHeight = 20;
-    let bulletWidth = 20;
-    let bulletSpeedY = 4;
+    // let bulletX = 100;
+    // let bulletY = 100;
+    // let bulletHeight = 20;
+    // let bulletWidth = 20;
+    // let bulletSpeedY = 4;
 
     let gameOver = false; 
     let animateId; 
@@ -61,6 +63,36 @@
         }
     };
 
+    const drawScore = () => {
+      ctx.fillStyle = 'black';
+      ctx.fillText('Score: ' + score, 10, 15)
+    }
+
+    class Projectile {
+      constructor(positionX, positionY, velocity) {
+        this.positionX = positionX
+        this.positionY = positionY
+        this.velocity = velocity 
+        this.radius = 4 
+      } 
+
+      draw() {
+        ctx.beginPath();
+        ctx.fillStyle = 'green'
+        ctx.arc(this.positionX, this.positionY, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+      };
+
+      update() {
+        this.draw() 
+        this.positionY += this.velocity
+      }
+    }
+
+    const projectiles = [
+      new Projectile(300, 300, -5)]
+
     const drawPlayer = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();
@@ -70,39 +102,44 @@
       ctx.closePath();
     };
 
-    const drawBullet = () => {
-      //ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.beginPath();
-      ctx.fillStyle = 'pink';
-      ctx.rect(bulletX, bulletY, bulletWidth, bulletHeight);
-      ctx.fill();
-      ctx.closePath();
-    };
+    // const drawBullet = () => {
+    //   //ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //   ctx.beginPath();
+    //   ctx.fillStyle = 'pink';
+    //   ctx.rect(bulletX, bulletY, bulletWidth, bulletHeight);
+    //   ctx.fill();
+    //   ctx.closePath();
+    // };
 
-    const bulletShoot = () => {
-      if (isShooting && shot == false) {
-        bulletX = playerX + playerHeight / 2 - bulletWidth / 2;
-        bulletY = playerY - bulletHeight;
-        shot = true; 
-      }
-      if (isShooting && shot == true) {
-        bulletY -= bulletSpeedY
-      }
-      if (bulletY < 0) {
-        shot = false;
-        isShooting = false;
-      }
-      if (shot == false && isShooting == false) {
-        bulletX = 0;
-        bulletY = 0;
-      }
-    };
+    // const bulletShoot = () => {
+    //   if (isShooting && shot == false) {
+    //     bulletX = playerX + playerHeight / 2 - bulletWidth / 2;
+    //     bulletY = playerY - bulletHeight;
+    //     shot = true; 
+    //   }
+    //   if (isShooting && shot == true) {
+    //     bulletY -= bulletSpeedY
+    //   }
+    //   if (bulletY < 0) {
+    //     shot = false;
+    //     isShooting = false;
+    //   }
+    //   if (shot == false && isShooting == false) {
+    //     bulletX = 0;
+    //     bulletY = 0;
+    //   }
+    // };
   
     const animate = () => {
 
       drawPlayer(); 
-      drawBullet();
+      drawScore();
+      //drawBullet();
+      projectiles.forEach((projectile) => {
+        projectile.update()
+      })
 
+      
       const enemiesStillOnScreen = [];
 
       enemyArray.forEach(enemy => {
@@ -120,17 +157,16 @@
       };
      
 
-        if (isMovingLeft) {
+        if (isMovingLeft && playerX >= 0) {
             playerX -= 4;
-        } else if (isMovingRight) {
+        } else if (isMovingRight && playerX + playerWidth <= canvas.width) {
             playerX += 4;
-        } else if (isMovingUp) {
+        } else if (isMovingUp && playerY >= 0) {
             playerY -= 4;
-        } else if (isMovingDown) {
+        } else if (isMovingDown && playerY + playerHeight <= canvas.height) {
             playerY += 4;
         };
 
-        bulletShoot(); 
 
 
         if (gameOver) {
@@ -138,13 +174,11 @@
         } else {
           animateId = requestAnimationFrame(animate) 
         }
-
-        
     };
    // window.onload = () => {
         //canvas.style.display = "none"
 
-    const startGame = () =>{
+    const startGame = () => {
         document.querySelector('.title-screen').style.display = 'none';
         document.querySelector('.game-board').style.display = 'block';
 

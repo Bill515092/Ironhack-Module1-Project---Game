@@ -2,7 +2,8 @@ Project's name:
 Click here to see deployed game
 
 Description:
-Brief description of the project
+The game is a top down vertical shooter that will feature enemy models that can be shot by the player, 
+which will contribute to a score count. 
 
 MVP:
 • The game has one character asset that can move in any direction (WASD/Arrow Key Mapping).
@@ -15,27 +16,24 @@ Backlog:
 • Scoreboard 
 • Adding a variety of enemy classes (varying amounts of health).
 
-Data structure
+Data structure:
 List of classes and methods
 
-States y States Transitions
-List of states (views) of your game
-
-Task
+Task:
 • Basic HTML structure. 
 • Setting up the canvas.
 • Gameplay loop
 • Win/lose functions. 
 • CSS/visuals 
 
-Links
+Links:
 Trello
 
-Url for Trello 
+Url for Trello https://trello.com/b/bk7N2rKj/module-1-game 
 
 Git
 
-Url for the project repo 
+Url for the project repo https://github.com/Bill515092/Ironhack-Module1-Project---Game 
 
 Slides
 
