@@ -1,4 +1,3 @@
-
     const canvas = document.querySelector('canvas');
     const ctx = canvas.getContext('2d'); 
     const startButton = document.querySelector('startButton');
@@ -10,18 +9,11 @@
     let isMovingRight = false; 
     let isMovingUp = false;
     let isShooting = false;
-    let shot = false;
 
     let playerX = 240;
     let playerY = 600;
     let playerHeight = 40;
     let playerWidth = 40;
-
-    // let bulletX = 100;
-    // let bulletY = 100;
-    // let bulletHeight = 20;
-    // let bulletWidth = 20;
-    // let bulletSpeedY = 4;
 
     let gameOver = false; 
     let animateId; 
@@ -29,11 +21,12 @@
     let enemyArray = []
 
     class Enemy {
-      constructor(x) {
+      constructor(x, projectiles) {
         this.xPos = x;
         this.yPos = -40;
         this.height = 35;
         this.width = 35; 
+        this.projectiles = projectiles
       }
       drawEnemy() {
         //ctx.clearRect(0, 0, canvas.width, canvas.height) - blocking player asset 
@@ -61,7 +54,19 @@
             console.log('collision');
           }
         }
-    };
+
+      checkEnemyCollision = () => {
+        this.projectiles.forEach((projectile) => {
+          if (this.positionX < this.xPos + this.width &&
+            this.positionX + this.width > this.xPos &&
+            this.positionY < this.yPos + this.height &&
+            this.height + this.positionY > this.yPos
+            )
+          hasCollided = true //create hasCollided variable to decalre results of collision 
+          console.log('bullet collision')
+        })
+      } 
+      }
 
     const drawScore = () => {
       ctx.fillStyle = 'black';
@@ -73,13 +78,14 @@
         this.positionX = positionX
         this.positionY = positionY
         this.velocity = velocity 
-        this.radius = 4 
+        this.height = 5
+        this.width = 5
       } 
 
       draw() {
         ctx.beginPath();
         ctx.fillStyle = 'green'
-        ctx.arc(this.positionX, this.positionY, this.radius, 0, Math.PI * 2);
+        ctx.rect(this.positionX, this.positionY, this.width, this.height);
         ctx.fill();
         ctx.closePath();
       };
@@ -91,7 +97,7 @@
     }
 
     const projectiles = [
-      new Projectile(300, 300, -5)]
+      new Projectile(-300, -300, -5)]
 
     const drawPlayer = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -102,39 +108,11 @@
       ctx.closePath();
     };
 
-    // const drawBullet = () => {
-    //   //ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //   ctx.beginPath();
-    //   ctx.fillStyle = 'pink';
-    //   ctx.rect(bulletX, bulletY, bulletWidth, bulletHeight);
-    //   ctx.fill();
-    //   ctx.closePath();
-    // };
 
-    // const bulletShoot = () => {
-    //   if (isShooting && shot == false) {
-    //     bulletX = playerX + playerHeight / 2 - bulletWidth / 2;
-    //     bulletY = playerY - bulletHeight;
-    //     shot = true; 
-    //   }
-    //   if (isShooting && shot == true) {
-    //     bulletY -= bulletSpeedY
-    //   }
-    //   if (bulletY < 0) {
-    //     shot = false;
-    //     isShooting = false;
-    //   }
-    //   if (shot == false && isShooting == false) {
-    //     bulletX = 0;
-    //     bulletY = 0;
-    //   }
-    // };
-  
     const animate = () => {
 
       drawPlayer(); 
       drawScore();
-      //drawBullet();
       projectiles.forEach((projectile) => {
         projectile.update()
       })
@@ -168,7 +146,6 @@
         };
 
 
-
         if (gameOver) {
           cancelAnimationFrame(animateId)
         } else {
@@ -185,7 +162,6 @@
         animate()
     };
     
-
     document.getElementById('startButton').onclick = () => {
         startGame();
       };
@@ -204,11 +180,13 @@
         if (event.key === 'ArrowRight' || event.key === 'd' || event.key === 'D') {
           isMovingRight = true
           };
-        if (event.key === '32') {
+        if (event.key === ' ' && !isShooting) {
+          projectiles.push(
+            new Projectile(playerX + playerWidth / 2, playerY, -5)); 
           isShooting = true
-          };
           console.log('shoot')
-        //console.log({ isMovingDown, isMovingLeft, isMovingRight, isMovingUp })
+          };
+          
       });
     
       document.addEventListener('keyup', event => {
@@ -225,11 +203,7 @@
         if (event.key === 'ArrowRight' || event.key === 'd' || event.key === 'D') {
           isMovingRight = false
           };
-        if (event.key === '32') {
+        if (event.key === ' ') {
           isShooting = false
           };
-          //console.log('shoot')
-        //console.log({ isMovingDown, isMovingLeft, isMovingRight, isMovingUp })
         });
-    
-//}
