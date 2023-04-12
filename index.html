@@ -8,15 +8,36 @@
     <title>Document</title>
   </head>
   <body>
+
+
     <div class="title-screen">
       <h1>Game Title</h1>
       <p>Tag Line</p>
       <button id="startButton">Start</button>
       <p>Game Instructions</p>
     </div>
+
+
+    <div class="fixed">
+      <div class="bg-white">
+        <h1>0</h1>
+        <p>Total Points</p>
+        <div>
+        <button>Restart</button>
+        </div>
+      </div>
+
+    </div>
+
+
     <div class="game-board">
+      <p class="score">
+        <span>Score:</span> <span id="scoreEl">0</span>
+      </p>
     <canvas id="canvas" width="480" height="640"></canvas>
     </div>
+
+
     <script src="index.js"></script>
   </body>
   </html>

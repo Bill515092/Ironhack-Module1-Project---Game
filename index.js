@@ -1,4 +1,5 @@
     const canvas = document.querySelector('canvas');
+    let scoreElement = document.querySelector('#scoreEl');
     const ctx = canvas.getContext('2d'); 
     const startButton = document.querySelector('startButton');
 
@@ -42,50 +43,46 @@
       };
 
       checkCollison = () => {
-        if (playerX < this.xPos + this.width &&
+      if (playerX < this.xPos + this.width &&
           playerX + playerWidth > this.xPos &&
           playerY < this.yPos + this.height &&
-          playerHeight + playerY > this.yPos
+          playerY + playerHeight > this.yPos
           ) {
-            //collison detected. 
-            //decrease health by 1. 
-            //once health is 0. Game Over.
             gameOver = true;
             console.log('collision');
           }
         }
 
       checkEnemyCollision = () => {
-        this.projectiles.forEach((projectile) => {
-          if (this.positionX < this.xPos + this.width &&
-            this.positionX + this.width > this.xPos &&
-            this.positionY < this.yPos + this.height &&
-            this.height + this.positionY > this.yPos
-            )
-          hasCollided = true //create hasCollided variable to decalre results of collision 
-          console.log('bullet collision')
+        this.projectiles.forEach((projectiles) => {
+        if (projectiles.positionX < this.xPos + this.width &&
+            projectiles.positionX + projectiles.projWidth > this.xPos &&
+            projectiles.positionY < this.yPos + this.height &&
+            projectiles.positionY + projectiles.projHeight > this.yPos
+            ) {
+            this.xPos = -500; 
+            score += 100;
+            console.log('bulletCollision')
+            console.log(score)
+            scoreElement.innerHTML = score;
+            }
         })
       } 
       }
-
-    const drawScore = () => {
-      ctx.fillStyle = 'black';
-      ctx.fillText('Score: ' + score, 10, 15)
-    }
 
     class Projectile {
       constructor(positionX, positionY, velocity) {
         this.positionX = positionX
         this.positionY = positionY
         this.velocity = velocity 
-        this.height = 5
-        this.width = 5
+        this.projHeight = 5
+        this.projWidth = 5
       } 
 
       draw() {
         ctx.beginPath();
-        ctx.fillStyle = 'green'
-        ctx.rect(this.positionX, this.positionY, this.width, this.height);
+        ctx.fillStyle = 'yellow'
+        ctx.rect(this.positionX, this.positionY, this.projWidth, this.projHeight);
         ctx.fill();
         ctx.closePath();
       };
@@ -112,7 +109,7 @@
     const animate = () => {
 
       drawPlayer(); 
-      drawScore();
+      // drawScore();
       projectiles.forEach((projectile) => {
         projectile.update()
       })
@@ -123,6 +120,7 @@
       enemyArray.forEach(enemy => {
         enemy.drawEnemy();
         enemy.checkCollison();
+        enemy.checkEnemyCollision();
         enemy.movement();
         if(enemy.yPos < canvas.height) {
           enemiesStillOnScreen.push(enemy)
@@ -131,7 +129,7 @@
       enemy = enemiesStillOnScreen;
 
       if (animateId % 125 === 0) {
-      enemyArray.push(new Enemy(Math.random() * (canvas.width - 35)))
+      enemyArray.push(new Enemy(Math.random() * (canvas.width - 75), projectiles))
       };
      
 
@@ -152,12 +150,14 @@
           animateId = requestAnimationFrame(animate) 
         }
     };
-   // window.onload = () => {
-        //canvas.style.display = "none"
+    // window.onload = () => {
+    //     canvas.style.display = "none"
+    // }
 
     const startGame = () => {
         document.querySelector('.title-screen').style.display = 'none';
         document.querySelector('.game-board').style.display = 'block';
+        
 
         animate()
     };
