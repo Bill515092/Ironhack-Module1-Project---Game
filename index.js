@@ -1,10 +1,14 @@
+  
     const canvas = document.querySelector('canvas');
-    let scoreElement = document.querySelector('#scoreEl');
-    let scoreGameOverElement = document.querySelector('gameOverTotal');
+    const titleScreen = document.querySelector('.title-screen')
+    const gameBoard = document.querySelector('.game-board')
     const ctx = canvas.getContext('2d'); 
-    const startButton = document.querySelector('startButton');
+    const startButton = document.querySelector('#startButton');
     const resetButton = document.querySelector('#resetButton')
-    const gameOverScreen = document.querySelector('gameOverEl')
+    const gameOverScreen = document.querySelector('#gameOverEl')
+    let scoreElement = document.querySelector('#scoreEl');
+    let scoreGameOverElement = document.querySelector('#gameOverTotal');
+  
 
     let score = 0;
 
@@ -24,12 +28,11 @@
 
     let enemyArray = []
 
-    // function reset () {
-    //   enemyArray = []
-    //   enemiesStillOnScreen = [];
-    //   projectiles = [new Projectile(-300, -300, -5)]
-    //   drawPlayer()
-    // }
+    function reset () {
+      enemyArray = []
+      projectiles = []
+      drawPlayer()
+    }
 
     class Enemy {
       constructor(x, projectiles) {
@@ -40,7 +43,6 @@
         this.projectiles = projectiles
       }
       drawEnemy() {
-        //ctx.clearRect(0, 0, canvas.width, canvas.height) - blocking player asset 
         ctx.beginPath();
         ctx.fillStyle = 'red';
         ctx.rect(this.xPos, this.yPos, this.width, this.height);
@@ -49,7 +51,7 @@
       };
 
       movement() {
-        this.yPos += 2
+        this.yPos += 3
       };
 
       checkCollison = () => {
@@ -74,7 +76,6 @@
             score += 100;
             console.log('bulletCollision')
             console.log(score)
-            scoreElement.innerHTML = score;
             }
         })
       } 
@@ -103,10 +104,10 @@
       }
     }
 
-    const projectiles = [
+    let projectiles = [
       new Projectile(-300, -300, -5)]
 
-    const drawPlayer = () => {
+    let drawPlayer = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();
       ctx.fillStyle = 'blue'
@@ -118,6 +119,7 @@
 
     const animate = () => {
 
+      scoreElement.innerHTML = score;
       drawPlayer(); 
       projectiles.forEach((projectile) => {
         projectile.update()
@@ -156,32 +158,56 @@
         if (gameOver) {
           cancelAnimationFrame(animateId)
           gameOverEl.style.display = 'block';
-          gameOverTotal.innerHTML += score;
+          gameOverTotal.innerHTML = score;
         } else {
           animateId = requestAnimationFrame(animate) 
-        }
+        };
     };
     const windowLoad = () => {
-        canvas.style.display = "none"
+        gameBoard.style.display = 'none';
+        gameOverScreen.style.display = 'none';
     }
 
     const startGame = () => {
-        document.querySelector('.title-screen').style.display = 'none';
-        document.querySelector('.game-board').style.display = 'block';
-        document.querySelector('#gameOverEl').style.display = 'none';
+        titleScreen.style.display = 'none';
+        gameBoard.style.display = 'block';
+        gameOverScreen.style.display = 'none';
         
 
-        animate()
+        animate();
     };
     
-    document.getElementById('startButton').onclick = () => {
+    startButton.onclick = () => {
         startGame();
       };
 
-  
-    document.getElementById('resetButton').onclick = () => {
+  const resetGame = () => {
+        reset();
+        gameOverScreen.style.display = 'none';
+        titleScreen.style.display = 'none';
+
+        score = 0;
+
+        isMovingDown = false;
+        isMovingLeft = false;
+        isMovingRight = false; 
+        isMovingUp = false;
+        isShooting = false;
+
+        playerX = 240;
+        playerY = 600;
+        playerHeight = 40;
+        playerWidth = 40;
+
+        gameOver = false; 
         startGame()
       };
+    
+      document.getElementById('resetButton').onclick = () => {
+        resetGame();
+      };
+    
+      window.addEventListener('load', windowLoad)
     
 
       document.addEventListener('keydown', event => {
@@ -225,3 +251,4 @@
           isShooting = false
           };
         });
+      
