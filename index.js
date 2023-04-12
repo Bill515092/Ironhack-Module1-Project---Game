@@ -1,7 +1,10 @@
     const canvas = document.querySelector('canvas');
     let scoreElement = document.querySelector('#scoreEl');
+    let scoreGameOverElement = document.querySelector('gameOverTotal');
     const ctx = canvas.getContext('2d'); 
     const startButton = document.querySelector('startButton');
+    const resetButton = document.querySelector('#resetButton')
+    const gameOverScreen = document.querySelector('gameOverEl')
 
     let score = 0;
 
@@ -20,6 +23,13 @@
     let animateId; 
 
     let enemyArray = []
+
+    // function reset () {
+    //   enemyArray = []
+    //   enemiesStillOnScreen = [];
+    //   projectiles = [new Projectile(-300, -300, -5)]
+    //   drawPlayer()
+    // }
 
     class Enemy {
       constructor(x, projectiles) {
@@ -109,7 +119,6 @@
     const animate = () => {
 
       drawPlayer(); 
-      // drawScore();
       projectiles.forEach((projectile) => {
         projectile.update()
       })
@@ -146,17 +155,20 @@
 
         if (gameOver) {
           cancelAnimationFrame(animateId)
+          gameOverEl.style.display = 'block';
+          gameOverTotal.innerHTML += score;
         } else {
           animateId = requestAnimationFrame(animate) 
         }
     };
-    // window.onload = () => {
-    //     canvas.style.display = "none"
-    // }
+    const windowLoad = () => {
+        canvas.style.display = "none"
+    }
 
     const startGame = () => {
         document.querySelector('.title-screen').style.display = 'none';
         document.querySelector('.game-board').style.display = 'block';
+        document.querySelector('#gameOverEl').style.display = 'none';
         
 
         animate()
@@ -165,6 +177,12 @@
     document.getElementById('startButton').onclick = () => {
         startGame();
       };
+
+  
+    document.getElementById('resetButton').onclick = () => {
+        startGame()
+      };
+    
 
       document.addEventListener('keydown', event => {
         console.log(event)

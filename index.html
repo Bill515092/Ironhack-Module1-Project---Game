@@ -17,23 +17,22 @@
       <p>Game Instructions</p>
     </div>
 
-
-    <div class="fixed">
-      <div class="bg-white">
-        <h1>0</h1>
-        <p>Total Points</p>
-        <div>
-        <button>Restart</button>
-        </div>
-      </div>
-
-    </div>
-
-
     <div class="game-board">
       <p class="score">
-        <span>Score:</span> <span id="scoreEl">0</span>
+        <span>Score:</span><span id="scoreEl">0</span>
       </p>
+
+      <div id="gameOverEl">
+        <div class="bg-white">
+          <h1>GAME OVER!</h1>
+          <h2 id="gameOverTotal">0</h2>
+          <p>Total Points</p>
+          <div>
+          <button id="resetButton">Restart</button>
+          </div>
+        </div>
+       </div>  
+       
     <canvas id="canvas" width="480" height="640"></canvas>
     </div>
 
