@@ -7,7 +7,7 @@
     const resetButton = document.querySelector('#resetButton')
     const gameOverScreen = document.querySelector('#gameOverEl')
     const playerSprite = new Image()
-    playerSprite.src ='images/Spaceship_tut.png'
+    playerSprite.src ='images/DurrrSpaceShip.png'
     const enemySprite = new Image()
     enemySprite.src ='images/13.png'
     let bgImg = new Image()
