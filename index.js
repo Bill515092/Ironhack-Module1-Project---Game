@@ -61,7 +61,7 @@
       };
 
       movement() {
-        this.yPos += 4
+        this.yPos += 7
       };
 
       checkCollison = () => {
@@ -115,7 +115,7 @@
     }
 
     let projectiles = [
-      new Projectile(-300, -300, -5)]
+      new Projectile(-300, -300, -8)]
 
     let drawPlayer = () => {
       //ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -165,13 +165,13 @@
       };
 
         if (isMovingLeft && playerX >= 0) {
-            playerX -= 4;
+            playerX -= 6;
         } else if (isMovingRight && playerX + playerWidth <= canvas.width) {
-            playerX += 4;
+            playerX += 6;
         } else if (isMovingUp && playerY >= 0) {
-            playerY -= 4;
+            playerY -= 6;
         } else if (isMovingDown && playerY + playerHeight <= canvas.height) {
-            playerY += 4;
+            playerY += 6;
         };
 
 

@@ -11,6 +11,43 @@ body {
     color: white;
 }
 
+.game-title {
+    display: flex;
+    justify-content: center;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 100px;
+    background-image: -webkit-linear-gradient(#101b37, #E41376, #01C8EE);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.button-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#startButton {
+    position: relative;
+    text-align: center;
+    width: 200px;
+    padding: 20px;
+    font-size: 20px;
+    color: #01C8EE;
+    font-family: 'Press Start 2P', cursive;
+    font-weight: 400;
+    border: 5px solid #01C8EE;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    background: transparent;
+    cursor: pointer;
+}
+
+#startButton:hover {
+    box-shadow: 0 0 5px #01C8EE inset, 0 5px 50px 0 #01C8EE;
+}
+
 .game-board {
     position: relative;
 }

@@ -1,5 +1,5 @@
 Project's name:
-Click here to see deployed game
+DOGFIGHT 4940
 
 Description:
 The game is a top down vertical shooter that will feature enemy models that can be shot by the player, 
@@ -9,15 +9,14 @@ MVP:
 • The game has one character asset that can move in any direction (WASD/Arrow Key Mapping).
 • Enemy obstacles will randomly generate from just behind the top of the screen and move down toward the player.
 • The player can shoot and destroy the oncoming enemy obstacles. 
-• The game will end upon collision with the enemy.
 • Enemy deaths will contribute to score count in the top left of the screen. 
+• The game will end upon collision with the enemy.
 
 Backlog:
-• Scoreboard 
+• High-score board. 
 • Adding a variety of enemy classes (varying amounts of health).
+• Adding a multi-hit (health) system for the player.
 
-Data structure:
-List of classes and methods
 
 Task:
 • Basic HTML structure. 
