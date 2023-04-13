@@ -3,7 +3,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url(images/space_Background_1024.png);
+    background-image: url(images/space_Background_512.png);
     background-size: cover;
 }
 
