@@ -36,4 +36,5 @@ Url for the project repo https://github.com/Bill515092/Ironhack-Module1-Project-
 
 Slides
 
-Url for the project presentation (slides)
+Url for the project presentation https://slides.com/willhutchinson5150/bold 
+
