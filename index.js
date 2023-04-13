@@ -6,6 +6,16 @@
     const startButton = document.querySelector('#startButton');
     const resetButton = document.querySelector('#resetButton')
     const gameOverScreen = document.querySelector('#gameOverEl')
+    const playerSprite = new Image()
+    playerSprite.src ='./images/Spaceship_tut.png'
+    const enemySprite = new Image()
+    enemySprite.src ='./images/13.png'
+    let bgImg = new Image()
+    bgImg.src ='/images/Background_space_original.png'
+    let bg1Y = 0
+    let bg2Y = -canvas.height
+ 
+
     let scoreElement = document.querySelector('#scoreEl');
     let scoreGameOverElement = document.querySelector('#gameOverTotal');
   
@@ -45,13 +55,13 @@
       drawEnemy() {
         ctx.beginPath();
         ctx.fillStyle = 'red';
-        ctx.rect(this.xPos, this.yPos, this.width, this.height);
+        ctx.drawImage(enemySprite, this.xPos, this.yPos, this.width, this.height);
         ctx.fill();
         ctx.closePath();
       };
 
       movement() {
-        this.yPos += 3
+        this.yPos += 4
       };
 
       checkCollison = () => {
@@ -108,23 +118,34 @@
       new Projectile(-300, -300, -5)]
 
     let drawPlayer = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      //ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();
-      ctx.fillStyle = 'blue'
-      ctx.rect(playerX, playerY, playerWidth, playerHeight);
+      ctx.drawImage(playerSprite, playerX, playerY, playerWidth, playerHeight);
       ctx.fill();
       ctx.closePath();
     };
 
 
     const animate = () => {
+      ctx.drawImage(bgImg, 0, bg1Y, canvas.width, canvas.height)
+      ctx.drawImage(bgImg, 0, bg2Y, canvas.width, canvas.height)
+
+      bg1Y += 3;
+      bg2Y += 3;
+
+      if(bg1Y > canvas.height) {
+        bg1Y = -canvas.height
+      } 
+      if(bg2Y > canvas.height) {
+        bg2Y = -canvas.height
+      }
 
       scoreElement.innerHTML = score;
+      
       drawPlayer(); 
       projectiles.forEach((projectile) => {
         projectile.update()
       })
-
       
       const enemiesStillOnScreen = [];
 
@@ -142,7 +163,6 @@
       if (animateId % 125 === 0) {
       enemyArray.push(new Enemy(Math.random() * (canvas.width - 75), projectiles))
       };
-     
 
         if (isMovingLeft && playerX >= 0) {
             playerX -= 4;
