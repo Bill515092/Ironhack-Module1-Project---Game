@@ -23,7 +23,7 @@ body {
 
 .button-container {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -48,15 +48,21 @@ body {
     box-shadow: 0 0 5px #01C8EE inset, 0 5px 50px 0 #01C8EE;
 }
 
+.inst-container {
+    position: absolute;
+    top: 50%;
+    left: 38%;
+}
+
 .instructions {
     position: absolute;
     text-align: center;
     width: 300px;
-    padding: 20px;
-    font-size: 20px;
+    padding: 10px;
+    font-size: 17px;
     color: white;
     font-family: 'Press Start 2P', cursive;
-    font-weight: 400;
+    font-weight: 200;
     border: 5px solid white;
     letter-spacing: 5px;
     background: transparent;
